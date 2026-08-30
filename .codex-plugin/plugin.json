@@ -3,5 +3,26 @@
   "name": "video-production-toolkit-v2",
   "version": "0.1.0",
   "description": "Recommend and guide voice-timed video production from script and style choices through batch media, Remotion preview, and export.",
-  "skills": "./skills/"
+  "author": {
+    "name": "Fantasy421",
+    "url": "https://github.com/Fantasy421"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Video Production Toolkit V2",
+    "shortDescription": "Evidence-based guidance from a video idea to an editable preview.",
+    "longDescription": "Recommends scripts, voices, voice-timed storyboards, visual directions, and resource scope, then guides batch media production through Remotion preview and approved export.",
+    "developerName": "Fantasy421",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write",
+      "Media"
+    ],
+    "defaultPrompt": [
+      "根据这个主题推荐脚本、声音和分镜方案。",
+      "根据这份文案和素材，生成可确认的视频制作方案。",
+      "根据预览反馈，只重做指定的音频、图片或视频部分。"
+    ]
+  }
 }
