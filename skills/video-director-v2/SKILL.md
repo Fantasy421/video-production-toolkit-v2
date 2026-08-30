@@ -25,6 +25,11 @@ available assets, consistency needs, and production cost as evidence. Explain th
 few facts that materially caused the recommendation. The user may accept the
 default or change only one part.
 
+When generating the first script, judge factual consistency, logical completeness,
+audience fit, and spoken clarity from the supplied sources and available context.
+Correct supported issues directly and state any material assumption in `依据`.
+Choose the initial length and structure instead of opening a separate review step.
+
 ## Project state
 
 Create the project `workflow.json` from
