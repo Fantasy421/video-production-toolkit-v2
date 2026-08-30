@@ -1,0 +1,32 @@
+{
+  "stage": "needs_brief",
+  "confirmed": {
+    "script": false,
+    "voice": false,
+    "storyboard": false,
+    "style": false,
+    "preview": false
+  },
+  "choices": {},
+  "paths": {
+    "script": null,
+    "storyboard": null,
+    "audio": [],
+    "keywordTiming": null,
+    "images": [],
+    "remotionProject": null,
+    "preview": null,
+    "export": null
+  },
+  "pendingDecision": {
+    "question": "请提供视频主题、已有文案或目标素材",
+    "recommendedOption": "先说明主题、目标受众和发布平台",
+    "basis": "这三项足以生成首版脚本、时长和画面建议",
+    "adjustable": [
+      "视频时长",
+      "语气",
+      "素材限制"
+    ]
+  },
+  "nextAction": "生成推荐脚本和声音方案"
+}

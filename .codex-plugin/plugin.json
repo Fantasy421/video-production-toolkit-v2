@@ -1,0 +1,7 @@
+{
+  "id": "video-production-toolkit-v2",
+  "name": "video-production-toolkit-v2",
+  "version": "0.1.0",
+  "description": "Recommend and guide voice-timed video production from script and style choices through batch media, Remotion preview, and export.",
+  "skills": "./skills/"
+}
