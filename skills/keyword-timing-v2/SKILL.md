@@ -15,7 +15,8 @@ Require:
 
 - the real narration audio path;
 - the approved script with stable sentence ids;
-- the sentence timing artifact from `voice-producer-v2`;
+- `audio/voice-timing.json` normalized from Doubao service subtitles;
+- the raw Doubao metadata path retained by `voice-producer-v2`;
 - a project output directory.
 
 Start only after real audio exists. Keep the approved wording and sentence ids
@@ -31,9 +32,11 @@ Select cues that materially affect viewer understanding or visual timing:
 - questions that set up an answer;
 - contrasts, turns, conclusions, and topic transitions.
 
-Prefer a meaningful phrase over isolated filler words. Use the narration audio
-and its available word or alignment timestamps; never place a cue from reading
-speed alone. Keep every cue inside its sentence interval.
+Prefer a meaningful phrase over isolated filler words. Use the ordered `words`
+timestamps from `audio/voice-timing.json`, with raw Doubao subtitle events only
+when normalization needs clarification. Do not transcribe or realign audio again.
+Never place a cue from reading speed alone. Keep every cue inside its sentence
+interval.
 
 Assign one useful motion intent:
 
@@ -49,7 +52,7 @@ Write `timing/keywords.json` with integer milliseconds:
 
 ```json
 {
-  "audioPath": "audio/voiceover.wav",
+  "audioPath": "audio/voiceover.mp3",
   "cues": [
     {
       "id": "cue-001",
@@ -85,8 +88,9 @@ Return the timing artifact as the main success:
 }
 ```
 
-If a sentence cannot be aligned after one retry of a transient operation, report
-its sentence id and reason. Preserve all usable cues and return immediately.
+If required service timestamps are missing, report the affected sentence id and
+reason. Preserve all usable cues and return immediately; a new paid synthesis
+request requires the user's decision in the main task.
 
 ## Targeted refresh
 

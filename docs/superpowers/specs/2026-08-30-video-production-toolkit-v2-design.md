@@ -82,6 +82,8 @@ V2 包含七个轻量 Skill。`video-director-v2` 同时承接预览后的用户
 
 同一音频 Agent 处理整份台词，不按句创建 Agent。
 
+音频 Agent 必须使用 `doubao-voiceover`，开启服务端字幕并保留原始字级时间戳 JSON。关键词时间直接从这些真实时间戳整理。豆包合成 API 请求不自动重试，避免重复计费；失败后由主任务给出修正建议并让用户决定是否再次请求。
+
 ### 4.3 `keyword-timing-v2`
 
 供全新的关键词时间 Agent 使用。它只在真实音频生成后启动，读取音频及句级时长，记录：
@@ -202,7 +204,7 @@ V2 包含七个轻量 Skill。`video-director-v2` 同时承接预览后的用户
   "paths": {
     "script": "script.md",
     "storyboard": "storyboard.md",
-    "audio": ["audio/voiceover.wav"],
+    "audio": ["audio/voiceover.mp3", "audio/voiceover.mp3.json", "audio/voice-timing.json"],
     "keywordTiming": "timing/keywords.json",
     "images": [],
     "remotionProject": null,
@@ -229,7 +231,8 @@ V2 包含七个轻量 Skill。`video-director-v2` 同时承接预览后的用户
 
 ## 9. 失败处理
 
-- 瞬时故障允许原生产 Agent 自动重试一次。
+- 不涉及豆包合成付费请求的瞬时故障允许原生产 Agent 自动重试一次。
+- 豆包合成 API 尝试失败后立即返回主任务，由用户决定是否再次发起付费请求。
 - 第二次失败后立即返回主任务，报告失败项目、原因和已成功产物路径。
 - 主任务向用户提供有推荐顺序的选项：重试、更换工具、补充资源、在可行时跳过。
 - 等待期间只在出现新产物、明确失败或需要用户决定时更新进度。

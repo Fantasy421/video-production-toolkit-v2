@@ -48,8 +48,9 @@ Store only:
 
 Pause for the user only at these points:
 
-1. **Script and voice.** Show the recommended script, estimated duration, voice,
-   basis, and adjustable items. Continue after both script and voice are approved.
+1. **Script and voice.** Show the recommended script, estimated duration, verified
+   Doubao speaker id, delivery style, speed, basis, and adjustable items. Continue
+   after both script and voice are approved.
 2. **Storyboard and resources.** Use `storyboard-director-v2` in the main task.
    Show the recommended shots, cue times, illustration count and ratio, and
    resource scope. Continue after the user approves them.
@@ -68,7 +69,7 @@ Use fresh Agents with bounded media responsibilities in this order:
 
 ```text
 decision 1 approved
-  -> fresh voice Agent using voice-producer-v2
+  -> fresh voice Agent using voice-producer-v2 and required doubao-voiceover
   -> fresh keyword-timing Agent using keyword-timing-v2 after real audio exists
   -> main task uses storyboard-director-v2
 decision 2 approved
@@ -119,7 +120,11 @@ work.
 
 ## Failure and progress behavior
 
-- Allow the working Agent one retry for a transient tool or network failure.
+- Allow one retry for a transient tool or network failure when the operation is
+  not a Doubao synthesis API request.
+- Never automatically retry Doubao synthesis after an API attempt; return its
+  error and available session or Log ID so the user decides whether to spend on
+  another request.
 - After the second failure, preserve successes and return to the main task.
 - Recommend one of: retry, change tool, supplement resources, or skip when the
   remaining output is still usable. Explain the impact of the recommendation.

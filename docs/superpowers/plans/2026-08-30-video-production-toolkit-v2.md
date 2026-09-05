@@ -20,7 +20,7 @@
 - Normal production dispatches five fresh Agents total: voice, keyword timing, visual style/motion, illustration batch, and Remotion video.
 - The three media Agents are voice, illustration, and video; one Agent handles the whole batch for its media type.
 - Default shot duration is 3–5 seconds. A shot longer than 5 seconds needs sustained information progress, composition changes, or rich motion.
-- A transient production failure gets one retry. A second failure returns immediately with impact and a recommended user choice.
+- A transient production failure gets one retry except Doubao synthesis API attempts, which return immediately for a user retry decision to avoid duplicate charge.
 - Production Agents report successes, failures, and paths. The main task uses that report as the next guidance input.
 - No `tests/` directory or runtime test suite. Validation is limited to JSON syntax, Skill frontmatter, and plugin structure during repository development.
 - Keep every Skill self-contained in one `SKILL.md`; add no references, scripts, registries, schemas, migration layer, or placeholder files unless a concrete implementation need appears.
@@ -261,9 +261,9 @@ description: Generate an approved narration as one consistent batch and report r
 
 - [ ] **Step 2: Define the batch input and production behavior**
 
-The body must require one fresh Agent to handle the complete approved script with one voice configuration. It may select an available TTS or voice tool appropriate to the request, preserve sentence ids, and keep every generated file inside the project output directory.
+The body must require one fresh Agent to handle the complete approved script with one voice configuration. It must use the `doubao-voiceover` sub-skill with subtitles enabled, preserve sentence ids outside the spoken text, and keep every generated file inside the project output directory.
 
-Require one automatic retry for transient tool or network failure. After a second failure, keep successful sentences and return the failed ids immediately.
+Do not automatically retry a Doubao synthesis API attempt because it can duplicate charge. Preserve successful audio and provider metadata, then return the failure for a user retry decision.
 
 - [ ] **Step 3: Define the timing report**
 
@@ -272,7 +272,7 @@ Require a project-relative JSON timing artifact with this shape:
 ```json
 {
   "voice": "confirmed voice label",
-  "audioPath": "audio/voiceover.wav",
+  "audioPath": "audio/voiceover.mp3",
   "totalDurationMs": 0,
   "sentences": [
     {"id": "line-001", "text": "approved narration text", "startMs": 0, "endMs": 0, "durationMs": 0}
@@ -320,7 +320,7 @@ Use this output shape:
 
 ```json
 {
-  "audioPath": "audio/voiceover.wav",
+  "audioPath": "audio/voiceover.mp3",
   "cues": [
     {
       "id": "cue-001",
